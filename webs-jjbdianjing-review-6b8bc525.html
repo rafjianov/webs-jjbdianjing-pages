@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>竞技宝 · 信息卡片</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f2f4f6;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      line-height: 1.6;
+      color: #1f2a3f;
+      padding: 2rem 1rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page-wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* ---------- hero 卡 ---------- */
+    .hero-card {
+      background: #ffffff;
+      border-radius: 28px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+      border: 1px solid #e7ebf0;
+      padding: 3rem 2.5rem;
+      margin-bottom: 2rem;
+      transition: box-shadow 0.2s;
+    }
+
+    .hero-card h1 {
+      font-size: 2.6rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: #0d1b2a;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-card .tagline {
+      font-size: 1.1rem;
+      color: #4a5b73;
+      max-width: 640px;
+      border-left: 4px solid #b0c4d9;
+      padding-left: 1.25rem;
+      margin: 0.8rem 0 1.6rem 0;
+    }
+
+    .hero-card .intro-text {
+      color: #2d3f57;
+      max-width: 720px;
+    }
+
+    .hero-card .intro-text a {
+      color: #1f4866;
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1.5px solid #b7cbdf;
+      transition: border-color 0.15s;
+    }
+
+    .hero-card .intro-text a:hover {
+      border-color: #1f4866;
+    }
+
+    /* ---------- 卡片网格 ---------- */
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (min-width: 680px) {
+      .card-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (min-width: 1000px) {
+      .card-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+
+    .info-card {
+      background: #ffffff;
+      border-radius: 24px;
+      border: 1px solid #e4e9f0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02), 0 6px 12px rgba(0, 0, 0, 0.02);
+      padding: 1.8rem 1.6rem 2rem;
+      transition: box-shadow 0.2s, transform 0.1s;
+    }
+
+    .info-card:hover {
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+      transform: translateY(-2px);
+    }
+
+    .info-card .card-icon {
+      font-size: 1.9rem;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+      background: #eef3f9;
+      width: 48px;
+      height: 48px;
+      line-height: 48px;
+      text-align: center;
+      border-radius: 18px;
+      color: #1f3d5e;
+    }
+
+    .info-card h3 {
+      font-size: 1.3rem;
+      font-weight: 500;
+      margin: 0.5rem 0 0.6rem;
+      color: #0f263c;
+    }
+
+    .info-card p {
+      color: #314a62;
+      font-size: 0.97rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .info-card ul {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 0.4rem;
+    }
+
+    .info-card li {
+      padding: 0.25rem 0;
+      color: #2f4862;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+    }
+
+    .info-card li::before {
+      content: "▹";
+      color: #6a87a3;
+      font-size: 0.9rem;
+    }
+
+    /* ---------- 通栏段落卡 ---------- */
+    .section-card {
+      background: #ffffff;
+      border-radius: 24px;
+      border: 1px solid #e4e9f0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+      padding: 2rem 2.2rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .section-card h2 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: #0f263c;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-card h2 small {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: #5f7792;
+      background: #eef3f9;
+      padding: 0.1rem 0.8rem;
+      border-radius: 40px;
+    }
+
+    .section-card p {
+      margin-bottom: 0.95rem;
+      color: #2a4058;
+    }
+
+    .section-card a {
+      color: #1f4866;
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1.5px solid #cbdae9;
+    }
+
+    .section-card a:hover {
+      border-bottom-color: #1f4866;
+    }
+
+    .faq-item {
+      border-top: 1px solid #e6ecf3;
+      padding: 0.9rem 0 0.7rem;
+    }
+
+    .faq-item:first-of-type {
+      border-top: none;
+      padding-top: 0.2rem;
+    }
+
+    .faq-item strong {
+      display: block;
+      font-weight: 500;
+      color: #142c44;
+      margin-bottom: 0.2rem;
+    }
+
+    .faq-item span {
+      color: #3c5775;
+      font-size: 0.93rem;
+    }
+
+    .footnote {
+      margin-top: 1rem;
+      color: #5d6f86;
+      font-size: 0.9rem;
+      border-left: 3px solid #cbd7e6;
+      padding-left: 1rem;
+    }
+
+    /* ---------- 页脚 ---------- */
+    .page-footer {
+      margin-top: 2.2rem;
+      text-align: center;
+      color: #6a7d96;
+      font-size: 0.88rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid #dce2ec;
+    }
+
+    .page-footer a {
+      color: #3f5a77;
+      text-decoration: none;
+      border-bottom: 1px solid #cdd8e6;
+    }
+
+    .page-footer a:hover {
+      border-bottom-color: #3f5a77;
+    }
+
+    /* 响应式微调 */
+    @media (max-width: 560px) {
+      body { padding: 1.2rem 0.8rem; }
+      .hero-card { padding: 2rem 1.2rem; }
+      .hero-card h1 { font-size: 2rem; }
+      .section-card { padding: 1.5rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- hero 卡片 -->
+  <div class="hero-card">
+    <h1>竞技宝 · 信息卡片</h1>
+    <div class="tagline">围绕主题整理的关键脉络与使用场景</div>
+    <div class="intro-text">
+      <p>
+        从「竞技宝」出发，我们把它的主要用途、适配人群、以及常见问题梳理成几组卡片。
+        以下内容基于公开信息与合理归纳，呈现方式偏向结构化的说明页。
+        如果你对具体服务感兴趣，可以进一步了解
+        <a href="https://webs-jjbdianjing.com">竞技宝</a>
+        的详细说明。
+      </p>
+    </div>
+  </div>
+
+  <!-- 三列信息卡片 -->
+  <div class="card-grid">
+    <!-- 卡片1：用途说明 -->
+    <div class="info-card">
+      <div class="card-icon">📋</div>
+      <h3>用途卡片</h3>
+      <p>竞技宝主要面向线上竞技场景，提供信息聚合、赛事追踪与数据参考等基础功能。</p>
+      <ul>
+        <li>整合多平台赛事信息</li>
+        <li>实时比分与赛程概览</li>
+        <li>基础数据统计与对比</li>
+        <li>社区讨论与动态摘要</li>
+      </ul>
+    </div>
+
+    <!-- 卡片2：适合人群 -->
+    <div class="info-card">
+      <div class="card-icon">👥</div>
+      <h3>适合人群</h3>
+      <ul>
+        <li>关注电竞赛事进度的观众</li>
+        <li>需要快速查阅赛程的爱好者</li>
+        <li>对战队数据有基本需求的用户</li>
+        <li>希望参与社区氛围的轻度玩家</li>
+      </ul>
+      <p style="margin-top:0.6rem;">不区分专业或休闲，只需对竞技内容抱有兴趣。</p>
+    </div>
+
+    <!-- 卡片3：特点归纳 -->
+    <div class="info-card">
+      <div class="card-icon">⚙️</div>
+      <h3>特点简述</h3>
+      <ul>
+        <li>界面简洁，信息层级清晰</li>
+        <li>覆盖多个主流竞技项目</li>
+        <li>更新频率较高，时效性尚可</li>
+        <li>不强制注册即可浏览部分内容</li>
+      </ul>
+      <p style="margin-top:0.6rem; font-size:0.9rem; color:#4b6885;">以上特点基于常规使用体验，具体以实际页面为准。</p>
+    </div>
+  </div>
+
+  <!-- 通栏：场景与提示 -->
+  <div class="section-card">
+    <h2>常用场景 <small>参考整理</small></h2>
+    <p>
+      很多访问者会利用竞技宝快速了解当日重点对局，比如在比赛开始前查看首发名单或历史交手记录。
+      也有用户在赛后浏览数据面板，结合社区简短评论形成自己的观赛笔记。
+    </p>
+    <p>
+      对于不常看直播但想跟进比赛结果的群体，赛程时间轴和比分卡片是使用频率较高的模块。
+      另外，部分用户会通过关键词搜索特定战队或选手的近期表现，页面一般会返回整合后的摘要。
+    </p>
+
+    <h2 style="margin-top:1.6rem;">提示与说明</h2>
+    <div class="faq-item">
+      <strong>信息可靠性</strong>
+      <span>数据来源为公开赛事接口与合作方，但偶尔存在延迟或修正，建议交叉核对关键信息。</span>
+    </div>
+    <div class="faq-item">
+      <strong>账号与个性化</strong>
+      <span>部分功能（如关注战队、收藏赛程）需要登录，基础浏览无需注册。</span>
+    </div>
+    <div class="faq-item">
+      <strong>内容边界</strong>
+      <span>平台主要提供信息聚合，不包含博彩、投注或任何形式的金钱交易引导。</span>
+    </div>
+    <div class="footnote">
+      如果你想直接查看站点内容，可以通过 <a href="https://webs-jjbdianjing.com">竞技宝</a> 访问。
+    </div>
+  </div>
+
+  <!-- FAQ 摘要卡 (轻量) -->
+  <div class="section-card" style="padding-bottom:1.6rem;">
+    <h2>FAQ 摘要</h2>
+    <div class="faq-item">
+      <strong>是否需要下载客户端？</strong>
+      <span>不需要。竞技宝以网页形式提供，浏览器打开即可使用，没有独立客户端。</span>
+    </div>
+    <div class="faq-item">
+      <strong>支持哪些比赛项目？</strong>
+      <span>涵盖主流的 MOBA、FPS、自走棋等品类，具体列表在站点首页有分类入口。</span>
+    </div>
+    <div class="faq-item">
+      <strong>数据更新频率如何？</strong>
+      <span>常规比赛基本实时更新，杯赛或大型赛事会提前录入赛程，赛后数据通常在几分钟内刷新。</span>
+    </div>
+    <div style="margin-top:1rem; color:#476282;">
+      更多问题可以在页面内寻找帮助文档或联系客服。
+    </div>
+  </div>
+
+  <!-- 页脚 -->
+  <div class="page-footer">
+    <span>信息卡片 · 基于公开资料整理 &nbsp;|&nbsp; 内容仅供一般性参考</span><br>
+    <span style="font-size:0.78rem; color:#7b8da3;">页面生成于静默环境，无跟踪与脚本。链接指向 <a href="https://webs-jjbdianjing.com">竞技宝</a></span>
+  </div>
+
+</div>
+</body>
+</html>
